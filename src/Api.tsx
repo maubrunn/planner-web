@@ -1,7 +1,9 @@
 import { DataEntry } from "./Datepicker";
 
+const baseUrl = "localhost:5050";
+
 async function loadData(): Promise<DataEntry[]> {
-    const url = "http://planner.trailsign.xyz/download-db";
+    const url = `${baseUrl}/download-db`;
 
     try {
         const response = await fetch(url);
@@ -19,7 +21,7 @@ async function loadData(): Promise<DataEntry[]> {
 }
 
 async function updateData(newData: DataEntry[]): Promise<void> {
-    const url = "http://planner.trailsign.xyz/add";
+    const url = `${baseUrl}/add`;
     const response = await fetch(url, {
         method: "POST",
         headers: {
