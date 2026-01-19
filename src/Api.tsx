@@ -1,15 +1,21 @@
 import { DataEntry } from "./Datepicker";
 
-const baseUrl = "localhost:5050";
+const baseUrl = "http://localhost:5050";
+const apiKey = "";
 
 async function loadData(): Promise<DataEntry[]> {
     const url = `${baseUrl}/download-db`;
 
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+            headers: {
+                "X-API-KEY": `${apiKey}`,
+            },
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+        console.log(response);
         const result = await response.json();
         return result as DataEntry[];
     } catch (error) {
@@ -26,6 +32,7 @@ async function updateData(newData: DataEntry[]): Promise<void> {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "X-API-KEY": `${apiKey}`,
         },
         body: JSON.stringify(newData),
     });
